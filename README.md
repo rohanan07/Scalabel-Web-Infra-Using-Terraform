@@ -1,99 +1,80 @@
 # Scalable Django Web Infrastructure on AWS using Terraform
 
-This project demonstrates how to host a **Django-based web application** on a **scalable AWS infrastructure**, fully provisioned using **Terraform**.
-The focus of this project is to understand how core AWS services work together in a real-world setup and how Infrastructure as Code (IaC) can be used to manage them efficiently.
+This repository contains the Terraform code for a project where I hosted a **Django-based web application** on a **scalable AWS infrastructure**.
+The objective of this project was to gain hands-on experience with AWS networking, compute, and load balancing concepts, and to manage the entire setup using **Infrastructure as Code (Terraform)**.
 
 ---
 
-## Architecture Overview
+## Architecture Summary
 
-The infrastructure is designed to be secure, scalable, and highly available.
+The infrastructure consists of a single scalable environment designed for high availability.
 
-[Architecture Diagram](/https://github.com/rohanan07/Blue-Green-Deploy-TF/blob/main/scalable%20web%20infra%20terraform.png)
-
-**High-level flow:**
+**Traffic flow:**
 
 Users → Application Load Balancer → Auto Scaling Group → EC2 instances (Dockerized Django app)
 
 EC2 instances run in private subnets and pull the application image from Docker Hub.
 
----
-
-## AWS Services Used
-
-- **VPC** – Custom VPC with proper subnet isolation  
-- **Public Subnets** – For ALB and NAT Gateway  
-- **Private Subnets** – For EC2 instances  
-- **Internet Gateway** – For inbound/outbound public traffic  
-- **NAT Gateway** – For outbound internet access from private subnets  
-- **Application Load Balancer (ALB)** – Distributes incoming traffic  
-- **Auto Scaling Group (ASG)** – Ensures scalability and availability  
-- **EC2** – Hosts the Django application  
-- **Docker** – Runs the Django app inside containers  
-- **Terraform** – Infrastructure provisioning and management  
+![Scalable Django Web Infrastructure](architecture/scalable-web-infra.png)
 
 ---
 
-## Key Features
+## What Was Implemented
 
-- Scalable infrastructure across multiple Availability Zones  
-- Load-balanced Django application  
-- EC2 instances isolated in private subnets  
-- Dockerized application deployment  
-- Infrastructure fully managed using Terraform  
-- Clean Terraform project structure with separated concerns  
+- A custom **VPC** with CIDR-based subnetting
+- **Public subnets** across multiple Availability Zones for ALB and NAT Gateway
+- **Private subnets** across multiple Availability Zones for EC2 instances
+- **Internet Gateway** for inbound internet access
+- **NAT Gateway** to allow private instances outbound access
+- **Application Load Balancer** to distribute incoming traffic
+- **Auto Scaling Group** with EC2 instances spread across AZs
+- **Launch Template** for EC2 configuration and bootstrapping
+- **Docker** installed via user-data and used to run the Django application
+- Django application image pulled from **Docker Hub**
+- All infrastructure provisioned and managed using **Terraform**
 
 ---
 
 ## Project Structure
 
+The Terraform configuration is organized into multiple files based on responsibility:
+
+.
 ├── backend.tf # Remote backend configuration
 ├── provider.tf # AWS provider configuration
 ├── variables.tf # Input variables
-├── main.tf # Core infrastructure resources
-├── vpc.tf # VPC, subnets, IGW, NAT
+├── main.tf # Core infrastructure setup
+├── vpc.tf # VPC, subnets, IGW, NAT Gateway
 ├── security_groups.tf # Security group rules
-├── asg.tf # Launch templates and Auto Scaling Groups
-├── alb.tf # Application Load Balancer configuration
-├── user_data.sh # EC2 bootstrap script (Docker setup)
-└── outputs.tf # Useful outputs
-
-## How the Application is Deployed
-
-- EC2 instances are launched via an Auto Scaling Group
-- Docker is installed using a user-data script
-- The Django application image is pulled from **Docker Hub**
-- The container runs on port 80 and is exposed via ALB
+├── alb.tf # Application Load Balancer
+├── asg.tf # Launch Template and Auto Scaling Group
+├── user_data.sh # EC2 bootstrap script
+└── outputs.tf # Output values (ALB DNS, etc.)
 
 ---
 
-## Prerequisites
+## Application Deployment Details
 
-- AWS account
-- Terraform installed
-- AWS CLI configured with appropriate permissions
+- EC2 instances are launched through an Auto Scaling Group
+- Docker is installed at instance boot time using a user-data script
+- The Django application runs inside a Docker container
+- The container listens on port 80 and is accessed through the ALB
 
 ---
 
-## How to Deploy
+## Key Learnings
 
-terraform init
-terraform plan
-terraform apply
-After deployment, access the application using the ALB DNS name output by Terraform.
+- Designing scalable architectures using ALB and ASG
+- Working with public and private subnets in AWS
+- Understanding the role of NAT Gateway for private instances
+- Managing infrastructure lifecycle using Terraform
+- Running containerized applications on EC2
 
-**Learning Outcomes**
-Through this project, I gained hands-on experience with:
+---
 
--Designing scalable AWS architectures
--Understanding ALB + ASG integration
--Working with private subnets and NAT Gateways
--Using Terraform to manage infrastructure lifecycle
--Running containerized applications on EC2
+## Current Scope
 
-**Future Improvements**
--Blue-Green deployment strategy
--Container image hosted in Amazon ECR
--CI/CD pipeline for automated deployments
--HTTPS using ACM and Route 53
+This project currently represents **a single scalable environment**.
+I am experimenting with extending this setup further (such as deployment strategies), but this repository reflects the stable and working version of the infrastructure.
 
+---
