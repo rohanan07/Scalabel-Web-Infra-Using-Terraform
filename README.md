@@ -39,7 +39,7 @@ EC2 instances run in private subnets and pull the application image from Docker 
 
 The Terraform configuration is organized into multiple files based on responsibility:
 
-
+```
 ├── backend.tf # Remote backend configuration
 ├── provider.tf # AWS provider configuration
 ├── variables.tf # Input variables
@@ -50,7 +50,7 @@ The Terraform configuration is organized into multiple files based on responsibi
 ├── asg.tf # Launch Template and Auto Scaling Group
 ├── user_data.sh # EC2 bootstrap script
 └── outputs.tf # Output values (ALB DNS, etc.)
-
+```
 ## Application Deployment Details
 
 - EC2 instances are launched through an Auto Scaling Group
