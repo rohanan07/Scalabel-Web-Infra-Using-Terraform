@@ -9,7 +9,7 @@ The focus of this project is to understand how core AWS services work together i
 
 The infrastructure is designed to be secure, scalable, and highly available.
 
-[](https://github.com/rohanan07/Blue-Green-Deploy-TF/blob/main/scalable%20web%20infra%20terraform.png)
+[Architecture Diagram](https://github.com/rohanan07/Blue-Green-Deploy-TF/blob/main/scalable%20web%20infra%20terraform.png)
 
 **High-level flow:**
 
@@ -77,9 +77,9 @@ EC2 instances run in private subnets and pull the application image from Docker 
 
 ## How to Deploy
 
--terraform init
--terraform plan
--terraform apply
+terraform init
+terraform plan
+terraform apply
 After deployment, access the application using the ALB DNS name output by Terraform.
 
 **Learning Outcomes**
