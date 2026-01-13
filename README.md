@@ -9,7 +9,7 @@ The focus of this project is to understand how core AWS services work together i
 
 The infrastructure is designed to be secure, scalable, and highly available.
 
-[Architecture Diagram](https://github.com/rohanan07/Blue-Green-Deploy-TF/blob/main/scalable%20web%20infra%20terraform.png)
+[Architecture Diagram](/https://github.com/rohanan07/Blue-Green-Deploy-TF/blob/main/scalable%20web%20infra%20terraform.png)
 
 **High-level flow:**
 
